@@ -1,0 +1,46 @@
+import matplotlib.pyplot as plt
+
+def midpoint_circle(x_center, y_center, radius):
+    """
+    Draws a circle using the Midpoint Circle Algorithm.
+    """
+    points = set()
+    x, y = 0, radius
+    p = 1 - radius  # Initial decision parameter
+
+    # Helper function to add points for all 8 octants
+    def add_points(x, y):
+        points.add((x_center + x, y_center + y))
+        points.add((x_center - x, y_center + y))
+        points.add((x_center + x, y_center - y))
+        points.add((x_center - x, y_center - y))
+        points.add((x_center + y, y_center + x))
+        points.add((x_center - y, y_center + x))
+        points.add((x_center + y, y_center - x))
+        points.add((x_center - y, y_center - x))
+
+    # Initial points
+    add_points(x, y)
+
+    while x < y:
+        x += 1
+        if p < 0:
+            p = p + 2 * x + 1
+        else:
+            y -= 1
+            p = p + 2 * (x - y) + 1
+        add_points(x, y)
+        
+    return sorted(list(points))
+
+# Example usage:
+circle_points = midpoint_circle(10, 10, 8)
+print("Midpoint Circle Points:", circle_points)
+
+# Optional: Plotting the circle
+# x_coords, y_coords = zip(*circle_points)
+# plt.scatter(x_coords, y_coords, color='blue', s=10)
+# plt.title("Midpoint Circle Drawing")
+# plt.gca().set_aspect('equal', adjustable='box')
+# plt.grid(True)
+# plt.show()
