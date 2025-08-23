@@ -1,0 +1,39 @@
+def bresenham_circle(x_center, y_center, radius):
+    """
+    Draws a circle using Bresenham's (Midpoint) Circle Algorithm.
+    """
+    points = set()
+    x, y = 0, radius
+    # Initial decision parameter
+    d = 3 - 2 * radius
+
+    # Helper function to plot points in all 8 octants via symmetry
+    def add_symmetric_points(xc, yc, x, y):
+        points.add((xc + x, yc + y))
+        points.add((xc - x, yc + y))
+        points.add((xc + x, yc - y))
+        points.add((xc - x, yc - y))
+        points.add((xc + y, yc + x))
+        points.add((xc - y, yc + x))
+        points.add((xc + y, yc - x))
+        points.add((xc - y, yc - x))
+
+    # Initial points
+    add_symmetric_points(x_center, y_center, x, y)
+
+    while x < y:
+        if d < 0:
+            # Choose East pixel
+            d = d + 4 * x + 6
+        else:
+            # Choose South-East pixel
+            d = d + 4 * (x - y) + 10
+            y -= 1
+        x += 1
+        add_symmetric_points(x_center, y_center, x, y)
+        
+    return sorted(list(points))
+
+# Example usage:
+circle_points = bresenham_circle(0, 0, 5)
+print("\nBresenham's Circle Points:", circle_points)

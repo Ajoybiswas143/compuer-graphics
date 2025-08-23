@@ -1,0 +1,29 @@
+import numpy as np
+
+def translate(points, tx, ty):
+    """
+    Translates a set of 2D points.
+    'points' should be an N x 2 NumPy array.
+    """
+    # Create the translation matrix
+    T = np.array([
+        [1, 0, tx],
+        [0, 1, ty],
+        [0, 0, 1]
+    ])
+    
+    # Convert points to homogeneous coordinates (add a '1' to each point)
+    ones = np.ones((points.shape[0], 1))
+    homogeneous_points = np.hstack([points, ones])
+    
+    # Apply the transformation by matrix multiplication
+    # We transpose points to (3, N) for multiplication and then transpose back
+    transformed_points = T @ homogeneous_points.T
+    
+    # Convert back to Cartesian coordinates (N x 2) by removing the last row
+    return transformed_points[:2, :].T
+# Example usage:
+triangle = np.array([[5, 5], [10, 5], [7, 10]])
+translated_triangle = translate(triangle, tx=15, ty=10)
+print("Original Triangle:\n", triangle)
+print("\nTranslated Triangle:\n", translated_triangle)

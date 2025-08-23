@@ -1,0 +1,26 @@
+import numpy as np
+
+def scale(points, sx, sy):
+    """
+    Scales a set of 2D points with respect to the origin.
+    'points' should be an N x 2 NumPy array.
+    """
+    # Create the scaling matrix
+    S = np.array([
+        [sx, 0,  0],
+        [0,  sy, 0],
+        [0,  0,  1]
+    ])
+                  
+    ones = np.ones((points.shape[0], 1))
+    homogeneous_points = np.hstack([points, ones])
+    
+    transformed_points = S @ homogeneous_points.T
+    
+    return transformed_points[:2, :].T
+
+# Example usage:
+triangle = np.array([[5, 5], [10, 5], [7, 10]])
+scaled_triangle = scale(triangle, sx=2, sy=1.5)
+print("Original Triangle:\n", triangle)
+print("\nScaled Triangle:\n", scaled_triangle)

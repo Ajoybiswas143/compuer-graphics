@@ -1,0 +1,41 @@
+import matplotlib.pyplot as plt
+
+def dda_line(x1, y1, x2, y2):
+    """
+    Draws a line using the DDA algorithm.
+    """
+    dx = x2 - x1
+    dy = y2 - y1
+
+    # Determine the number of steps
+    if abs(dx) > abs(dy):
+        steps = abs(dx)
+    else:
+        steps = abs(dy)
+
+    # Calculate increments
+    x_increment = dx / float(steps)
+    y_increment = dy / float(steps)
+
+    # Initialize points
+    x, y = float(x1), float(y1)
+    points = []
+
+    for _ in range(int(steps) + 1):
+        points.append((round(x), round(y)))
+        x += x_increment
+        y += y_increment
+        
+    return points
+
+# Example usage:
+line_points = dda_line(2, 3, 10, 8)
+print("DDA Points:", line_points)
+
+# Optional: Plotting the line
+# x_coords, y_coords = zip(*line_points)
+# plt.scatter(x_coords, y_coords, color='blue')
+# plt.plot(x_coords, y_coords, color='red')
+# plt.title("DDA Line Drawing")
+# plt.grid(True)
+# plt.show()
