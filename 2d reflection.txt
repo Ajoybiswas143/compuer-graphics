@@ -1,0 +1,26 @@
+import numpy as np
+
+def reflect(points, axis='x'):
+"""
+Reflects a set of 2D points across the x or y axis.
+'points' should be an N x 2 NumPy array.
+"""
+if axis == 'x':
+Rf = np.array([[1, 0, 0], [0, -1, 0], [0, 0, 1]])
+elif axis == 'y':
+Rf = np.array([[-1, 0, 0], [0, 1, 0], [0, 0, 1]])
+else:
+raise ValueError("Axis must be 'x' or 'y'")
+
+ones = np.ones((points.shape[0], 1))
+homogeneous_points = np.hstack([points, ones])
+
+transformed_points = Rf @ homogeneous_points.T
+
+return transformed_points[:2, :].T
+
+# Example usage:
+triangle = np.array([[2, 3], [6, 3], [4, 7]])
+reflected_triangle = reflect(triangle, axis='x')
+print("Original Triangle:\n", triangle)
+print("Reflected Triangle (about x-axis):\n", reflected_triangle)
